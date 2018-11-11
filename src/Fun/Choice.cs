@@ -8,7 +8,7 @@ namespace Fun
     /// <summary>
     /// A container for a value of one of the given types
     /// </summary>
-    public struct Choice<T1 ,T2> : IEquatable<Choice<T1,T2>>
+    public class Choice<T1 ,T2> : IEquatable<Choice<T1,T2>>
     {
         private readonly T1 _case1;
         private readonly T2 _case2;
@@ -18,7 +18,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2}" /> with the given T1 as the available value
         /// </summary>
-        public Choice(T1 value) : this()
+        public Choice(T1 value)
         {
             _case1 = value;
             _selectedCase = 1;
@@ -27,7 +27,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2}" /> with the given T2 as the available value
         /// </summary>
-        public Choice(T2 value) : this()
+        public Choice(T2 value)
         {
             _case2 = value;
             _selectedCase = 2;
@@ -79,7 +79,7 @@ namespace Fun
     }
 
     ///<see cref="Choice{T1,T2}"/>
-    public struct Choice<T1, T2, T3> : IEquatable<Choice<T1, T2, T3>>
+    public class Choice<T1, T2, T3> : IEquatable<Choice<T1, T2, T3>>
     {
         private readonly T1 _case1;
         private readonly T2 _case2;
@@ -90,7 +90,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3}" /> with the given T1 as the available value
         /// </summary>
-        public Choice(T1 value) : this()
+        public Choice(T1 value)
         {
             _case1 = value;
             _selectedCase = 1;
@@ -99,7 +99,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3}" /> with the given T2 as the available value
         /// </summary>
-        public Choice(T2 value) : this()
+        public Choice(T2 value)
         {
             _case2 = value;
             _selectedCase = 2;
@@ -108,7 +108,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3}" /> with the given T3 as the available value
         /// </summary>
-        public Choice(T3 value) : this()
+        public Choice(T3 value)
         {
             _case3 = value;
             _selectedCase = 3;
@@ -215,7 +215,7 @@ namespace Fun
     }
 
     ///<see cref="Choice{T1,T2}"/>
-    public struct Choice<T1, T2, T3, T4> : IEquatable<Choice<T1, T2, T3, T4>>
+    public class Choice<T1, T2, T3, T4> : IEquatable<Choice<T1, T2, T3, T4>>
     {
         private readonly T1 _case1;
         private readonly T2 _case2;
@@ -227,7 +227,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4}" /> with the given T1 as the available value
         /// </summary>
-        public Choice(T1 value) : this()
+        public Choice(T1 value)
         {
             _case1 = value;
             _selectedCase = 1;
@@ -236,7 +236,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4}" /> with the given T2 as the available value
         /// </summary>
-        public Choice(T2 value) : this()
+        public Choice(T2 value)
         {
             _case2 = value;
             _selectedCase = 2;
@@ -245,7 +245,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4}" /> with the given T3 as the available value
         /// </summary>
-        public Choice(T3 value) : this()
+        public Choice(T3 value)
         {
             _case3 = value;
             _selectedCase = 3;
@@ -254,7 +254,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4}" /> with the given T4 as the available value
         /// </summary>
-        public Choice(T4 value) : this()
+        public Choice(T4 value)
         {
             _case4 = value;
             _selectedCase = 4;
@@ -517,7 +517,7 @@ namespace Fun
     }
 
     ///<see cref="Choice{T1,T2}"/>
-    public struct Choice<T1, T2, T3, T4, T5> : IEquatable<Choice<T1, T2, T3, T4, T5>>
+    public class Choice<T1, T2, T3, T4, T5> : IEquatable<Choice<T1, T2, T3, T4, T5>>
     {
         private readonly T1 _case1;
         private readonly T2 _case2;
@@ -530,7 +530,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5}" /> with the given T1 as the available value
         /// </summary>
-        public Choice(T1 value) : this()
+        public Choice(T1 value)
         {
             _case1 = value;
             _selectedCase = 1;
@@ -538,7 +538,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5}" /> with the given T2 as the available value
         /// </summary>
-        public Choice(T2 value) : this()
+        public Choice(T2 value)
         {
             _case2 = value;
             _selectedCase = 2;
@@ -546,7 +546,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5}" /> with the given T3 as the available value
         /// </summary>
-        public Choice(T3 value) : this()
+        public Choice(T3 value)
         {
             _case3 = value;
             _selectedCase = 3;
@@ -554,7 +554,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5}" /> with the given T4 as the available value
         /// </summary>
-        public Choice(T4 value) : this()
+        public Choice(T4 value)
         {
             _case4 = value;
             _selectedCase = 4;
@@ -562,7 +562,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5}" /> with the given T5 as the available value
         /// </summary>
-        public Choice(T5 value) : this()
+        public Choice(T5 value)
         {
             _case5 = value;
             _selectedCase = 5;
@@ -1225,7 +1225,7 @@ namespace Fun
     }
 
     ///<see cref="Choice{T1,T2}"/>
-    public struct Choice<T1, T2, T3, T4, T5, T6> : IEquatable<Choice<T1, T2, T3, T4, T5, T6>>
+    public class Choice<T1, T2, T3, T4, T5, T6> : IEquatable<Choice<T1, T2, T3, T4, T5, T6>>
     {
         private readonly T1 _case1;
         private readonly T2 _case2;
@@ -1239,7 +1239,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T1 as the available value
         /// </summary>
-        public Choice(T1 value) : this()
+        public Choice(T1 value)
         {
             _case1 = value;
             _selectedCase = 1;
@@ -1249,7 +1249,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T2 as the available value
         /// </summary>
-        public Choice(T2 value) : this()
+        public Choice(T2 value)
         {
             _case2 = value;
             _selectedCase = 2;
@@ -1259,7 +1259,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T3 as the available value
         /// </summary>
-        public Choice(T3 value) : this()
+        public Choice(T3 value)
         {
             _case3 = value;
             _selectedCase = 3;
@@ -1269,7 +1269,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T4 as the available value
         /// </summary>
-        public Choice(T4 value) : this()
+        public Choice(T4 value)
         {
             _case4 = value;
             _selectedCase = 4;
@@ -1279,7 +1279,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T5 as the available value
         /// </summary>
-        public Choice(T5 value) : this()
+        public Choice(T5 value)
         {
             _case5 = value;
             _selectedCase = 5;
@@ -1289,7 +1289,7 @@ namespace Fun
         /// <summary>
         /// Creates a <see cref="Choice{T1,T2,T3,T4,T5,T6}" /> with the given T6 as the available value
         /// </summary>
-        public Choice(T6 value) : this()
+        public Choice(T6 value)
         {
             _case6 = value;
             _selectedCase = 6;

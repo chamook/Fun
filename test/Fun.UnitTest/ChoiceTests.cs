@@ -131,5 +131,20 @@ namespace Fun.UnitTest
             sut2.GetHashCode();
         }
 
+        private class NamedChoice : Choice<int, string>
+        {
+            public NamedChoice(int input) : base(input) {}
+            public NamedChoice(string input) : base(input) {}
+        }
+
+        [Theory, AutoData]
+        public void CanCreateClassThatInheritsFromChoice(int a, string b)
+        {
+            var sut = new NamedChoice(a);
+
+            var matchResult = sut.Match((int x) => true, (string y) => false);
+
+            Assert.True(matchResult);
+        }
     }
 }
