@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using E247.Fun.Exceptions;
-using static E247.Fun.Fun;
-using static E247.Fun.Unit;
+using Fun.Exceptions;
+using static Fun.Fun;
+using static Fun.Unit;
 
 // ReSharper disable InconsistentNaming
 
 #pragma warning disable 1591
 
-namespace E247.Fun
+namespace Fun
 {
     /// <summary>
     /// Represents a value that may or may not be available

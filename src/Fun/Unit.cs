@@ -2,7 +2,7 @@
 
 #pragma warning disable 1591
 
-namespace E247.Fun
+namespace Fun
 {
     public struct Unit : IEquatable<Unit>
     {

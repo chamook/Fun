@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using static E247.Fun.Unit;
+using static Fun.Unit;
 
 #pragma warning disable 1591
 
 // ReSharper disable InconsistentNaming
 
-namespace E247.Fun
+namespace Fun
 {
     public static class Fun
     {

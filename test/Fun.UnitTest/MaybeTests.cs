@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using E247.Fun;
-using E247.Fun.Exceptions;
+using Fun;
+using Fun.Exceptions;
 using AutoFixture.Xunit2;
 using Xunit;
 using Xunit.Extensions;
-using static E247.Fun.Fun;
+using static Fun.Fun;
 
-namespace E247.Fun.UnitTest
+namespace Fun.UnitTest
 {
     public class MaybeTests
     {

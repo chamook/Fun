@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using E247.Fun.Exceptions;
+using Fun.Exceptions;
 using AutoFixture.Xunit2;
 using Xunit;
-using static E247.Fun.Unit;
-using static E247.Fun.Fun;
+using static Fun.Unit;
+using static Fun.Fun;
 
-namespace E247.Fun.UnitTest
+namespace Fun.UnitTest
 {
     public class ResultTests
     {

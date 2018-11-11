@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace E247.Fun
+namespace Fun
 {
     public static class TaskExtensions
     {

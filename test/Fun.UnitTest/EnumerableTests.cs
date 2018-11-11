@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AutoFixture.Xunit2;
 using Xunit;
 
-namespace E247.Fun.UnitTest
+namespace Fun.UnitTest
 {
     public sealed class EnumerableTests
     {

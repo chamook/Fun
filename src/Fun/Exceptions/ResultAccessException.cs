@@ -2,7 +2,7 @@
 
 #pragma warning disable 1591
 
-namespace E247.Fun.Exceptions
+namespace Fun.Exceptions
 {
     public sealed class ResultAccessException : Exception
     {

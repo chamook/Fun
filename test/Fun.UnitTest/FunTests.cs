@@ -3,9 +3,9 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using AutoFixture.Xunit2;
 using Xunit;
-using static E247.Fun.Fun;
+using static Fun.Fun;
 
-namespace E247.Fun.UnitTest
+namespace Fun.UnitTest
 {
     public class FunTests
     {

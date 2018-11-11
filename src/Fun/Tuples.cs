@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 1591
 
-namespace E247.Fun
+namespace Fun
 {
     public static class Tuples
     {

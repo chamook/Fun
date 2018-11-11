@@ -1,9 +1,9 @@
 ﻿using System;
-using E247.Fun.Exceptions;
+using Fun.Exceptions;
 
 #pragma warning disable 1591
 
-namespace E247.Fun
+namespace Fun
 {
     /// <summary>
     /// A container for a value of one of the given types

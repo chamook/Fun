@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using AutoFixture.Xunit2;
 using Xunit;
-using static E247.Fun.Tuples;
-using static E247.Fun.Fun;
+using static Fun.Tuples;
+using static Fun.Fun;
 
-namespace E247.Fun.UnitTest
+namespace Fun.UnitTest
 {
     public class TuplesTests
     {

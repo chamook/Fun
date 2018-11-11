@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using E247.Fun.Exceptions;
-using static E247.Fun.Fun;
-using static E247.Fun.Unit;
+using Fun.Exceptions;
+using static Fun.Fun;
+using static Fun.Unit;
 
 #pragma warning disable 1591
 
 // ReSharper disable RedundantArgumentName
 
-namespace E247.Fun
+namespace Fun
 {
     public struct Result<TSuccess, TFailure>
     {
