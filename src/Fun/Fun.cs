@@ -130,61 +130,61 @@ namespace Fun
             (b, c, d, e) => func(a, b, c, d, e);
 
         // Pipe support
-        public static TResult Map<TValue, TResult>(this TValue @this, Func<TValue, TResult> func) =>
+        public static TResult Pipe<TValue, TResult>(this TValue @this, Func<TValue, TResult> func) =>
             func(@this);
-        public static async Task<TResult> Map<TValue, TResult>(this Task<TValue> @this, Func<TValue, TResult> func) =>
+        public static async Task<TResult> Pipe<TValue, TResult>(this Task<TValue> @this, Func<TValue, TResult> func) =>
             func(await @this);
 
-        public static async Task<TResult> MapAsync<TValue, TResult>(this TValue @this, Func<TValue, Task<TResult>> func) =>
+        public static async Task<TResult> PipeAsync<TValue, TResult>(this TValue @this, Func<TValue, Task<TResult>> func) =>
             await func(@this);
-        public static async Task<TResult> MapAsync<TValue, TResult>(this Task<TValue> @this, Func<TValue, Task<TResult>> func) =>
+        public static async Task<TResult> PipeAsync<TValue, TResult>(this Task<TValue> @this, Func<TValue, Task<TResult>> func) =>
             await func(await @this);
 
         // Chainable if
         public static TResult If<TValue, TResult>(this TValue @this, Func<TValue, bool> If, Func<TValue, TResult> Then, Func<TValue, TResult> Else) =>
             If(@this)
-                ? @this.Map(Then)
-                : @this.Map(Else);
+            ? Then(@this)
+            : Else(@this);
         public static async Task<TResult> If<TValue, TResult>(this Task<TValue> @this, Func<TValue, bool> If, Func<TValue, TResult> Then, Func<TValue, TResult> Else)
         {
             var value = await @this;
             return If(value)
-                ? value.Map(Then)
-                : value.Map(Else);
+                ? Then(value)
+                : Else(value);
         }
 
         public static async Task<TResult> IfAsync<TValue, TResult>(this TValue @this, Func<TValue, Task<bool>> If, Func<TValue, Task<TResult>> Then, Func<TValue, Task<TResult>> Else) =>
             (await If(@this))
-                ? await @this.Map(Then)
-                : await @this.Map(Else);
+                ? await Then(@this)
+                : await Else(@this);
         public static async Task<TResult> IfAsync<TValue, TResult>(this TValue @this, Func<TValue, bool> If, Func<TValue, Task<TResult>> Then, Func<TValue, Task<TResult>> Else) =>
             If(@this)
-                ? await @this.Map(Then)
-                : await @this.Map(Else);
+                ? await Then(@this)
+                : await Else(@this);
         public static async Task<TResult> IfAsync<TValue, TResult>(this TValue @this, Func<TValue, Task<bool>> If, Func<TValue, TResult> Then, Func<TValue, TResult> Else) =>
             (await If(@this))
-                ? @this.Map(Then)
-                : @this.Map(Else);
+                ? Then(@this)
+                : Else(@this);
         public static async Task<TResult> IfAsync<TValue, TResult>(this Task<TValue> @this, Func<TValue, Task<bool>> If, Func<TValue, Task<TResult>> Then, Func<TValue, Task<TResult>> Else)
         {
             var value = await @this;
             return (await If(value))
-                ? await value.Map(Then)
-                : await value.Map(Else);
+                ? await Then(value)
+                : await Else(value);
         }
         public static async Task<TResult> IfAsync<TValue, TResult>(this Task<TValue> @this, Func<TValue, bool> If, Func<TValue, Task<TResult>> Then, Func<TValue, Task<TResult>> Else)
         {
             var value = await @this;
             return If(value)
-                ? await value.Map(Then)
-                : await value.Map(Else);
+                ? await Then(value)
+                : await Else(value);
         }
         public static async Task<TResult> IfAsync<TValue, TResult>(this Task<TValue> @this, Func<TValue, Task<bool>> If, Func<TValue, TResult> Then, Func<TValue, TResult> Else)
         {
             var value = await @this;
             return (await If(value))
-                ? value.Map(Then)
-                : value.Map(Else);
+                ? Then(value)
+                : Else(value);
         }
 
         // Execute an action for side effect without breaking the pipe

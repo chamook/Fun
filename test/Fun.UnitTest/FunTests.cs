@@ -255,7 +255,7 @@ namespace Fun.UnitTest
         }
 
         [Theory, AutoData]
-        public void MapMapsFunctions(
+        public void PipePassesValuesToFunctions(
             int value,
             int const1,
             int const2)
@@ -266,8 +266,8 @@ namespace Fun.UnitTest
             var temp1 = func1(value);
             var expected = func2(temp1);
             var actual = value
-                .Map(func1)
-                .Map(func2);
+                .Pipe(func1)
+                .Pipe(func2);
 
             Assert.Equal(expected, actual);
         }
