@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <AssemblyTitle>An exciting functional library</AssemblyTitle>
+    <Version>0.1.0</Version>
+    <Title>Fun</Title>
+    <Description>An exciting functional library</Description>
+    <Authors>Adam Guest</Authors>
+    <ProjectUrl>https://github.com/chamook/fun</ProjectUrl>
+    <AssemblyName>Fun</AssemblyName>
+    <PackageId>FunLibrary</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
 </Project>
