@@ -521,5 +521,38 @@ namespace Fun.UnitTest
 
             Assert.False(actual.HasValue);
         }
+
+        [Theory, AutoData]
+        public void OrElseReturnsCorrectValueForSome(string maybe, string other)
+        {
+            var actual = maybe.ToMaybe().OrElse(other);
+
+            Assert.Equal(maybe, actual);
+        }
+
+        [Theory, AutoData]
+        public void OrElseReturnsCorrectValueForNone(string other)
+        {
+            var actual = Maybe<string>.Empty().OrElse(other);
+
+            Assert.Equal(other, actual);
+        }
+
+        [Theory, AutoData]
+        public void ToNullableReturnsCorrectValueForSome(int i)
+        {
+            var actual = i.ToMaybe().ToNullable();
+
+            Assert.True(actual.HasValue);
+            Assert.Equal(i, actual.Value);
+        }
+
+        [Fact]
+        public void ToNullableReturnsNullForNone()
+        {
+            var actual = Maybe<int>.Empty().ToNullable();
+
+            Assert.Null(actual);
+        }
     }
 }

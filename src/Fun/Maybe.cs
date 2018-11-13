@@ -698,5 +698,11 @@ namespace Fun
 
             return output;
         }
+
+        public static T OrElse<T>(this Maybe<T> maybe, T other) =>
+            maybe.HasValue ? maybe.Value : other;
+
+        public static T? ToNullable<T>(this Maybe<T> maybe) where T : struct =>
+            maybe.HasValue ? new Nullable<T>(maybe.Value) : null;
     }
 }
