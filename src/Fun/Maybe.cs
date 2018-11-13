@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Fun.Exceptions;
 using static Fun.Fun;
 using static Fun.Unit;
@@ -656,6 +657,46 @@ namespace Fun
             var i = await input;
 
             return f.Lift(i);
+        }
+
+        //Traverseable
+
+        public static Maybe<IEnumerable<TResult>> Traverse<TInput, TResult>(
+            this IEnumerable<TInput> input,
+            Func<TInput, Maybe<TResult>> func)
+        {
+            var output = new List<TResult>();
+
+            foreach(var i in input)
+            {
+                var x = func(i);
+
+                if (!x.HasValue)
+                    return Maybe<IEnumerable<TResult>>.Empty();
+
+                output.Add(x.Value);
+            }
+
+            return output;
+        }
+
+        public async static Task<Maybe<IEnumerable<TResult>>> TraverseAsync<TInput, TResult>(
+            this IEnumerable<TInput> input,
+            Func<TInput, Task<Maybe<TResult>>> func)
+        {
+            var output = new List<TResult>();
+
+            foreach(var i in input)
+            {
+                var x = await func(i);
+
+                if (!x.HasValue)
+                    return Maybe<IEnumerable<TResult>>.Empty();
+
+                output.Add(x.Value);
+            }
+
+            return output;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Fun;
 using Fun.Exceptions;
@@ -469,6 +471,55 @@ namespace Fun.UnitTest
             var sut = Maybe<string>.Empty();
 
             sut.GetHashCode();
+        }
+
+        [Theory, AutoData]
+        public void TraverseGivesProperResultsWhenFunctionReturnsSome(
+            List<int> input)
+        {
+            var expected = input.Select(x => x + 1).ToList();
+
+            var actual = input.Traverse(x => (x + 1).ToMaybe());
+
+            Assert.True(actual.HasValue);
+            var result = actual.Value.ToList();
+            Assert.Equal(expected[0], result[0]);
+            Assert.Equal(expected[1], result[1]);
+            Assert.Equal(expected[2], result[2]);
+        }
+
+        [Theory, AutoData]
+        public void TraverseReturnsNoneIfFunctionReturnsNone(List<int> input)
+        {
+            var actual = input.Traverse(x => Maybe<string>.Empty());
+
+            Assert.False(actual.HasValue);
+        }
+
+        [Theory, AutoData]
+        public async Task TraverseAsyncGivesProperResultsWhenFunctionReturnsSome(
+            List<int> input)
+        {
+            var expected = input.Select(x => x + 1).ToList();
+
+            var actual =
+                await input.TraverseAsync(x => Task.FromResult(x + 1).ToMaybe());
+
+            Assert.True(actual.HasValue);
+            var result = actual.Value.ToList();
+            Assert.Equal(expected[0], result[0]);
+            Assert.Equal(expected[1], result[1]);
+            Assert.Equal(expected[2], result[2]);
+        }
+
+        [Theory, AutoData]
+        public async Task TraverseAsyncReturnsNoneIfFunctionReturnsNone(
+            List<int> input)
+        {
+            var actual =
+                await input.TraverseAsync(x => Task.FromResult(Maybe<string>.Empty()));
+
+            Assert.False(actual.HasValue);
         }
     }
 }
