@@ -67,7 +67,6 @@ namespace Fun
         /// <see cref="HasValue"/>
         public bool Any() => HasValue;
         public T Single() => Value;
-        [Obsolete("Using SingleOrDefault can return null from a Maybe, when the whole point of this type is to avoid nulls. Using this makes you a bad person.")]
         public T SingleOrDefault() => HasValue ? Value : default (T);
 
         public static implicit operator Maybe<T>(T input) => new Maybe<T>(input);
@@ -312,12 +311,6 @@ namespace Fun
                 ? binder(@this.Value)
                 : Maybe<R>.Empty();
 
-        [Obsolete("This is not a real Bind")]
-        public static Maybe<R> Bind<T, R>(this Maybe<T> @this, Func<T, Maybe<R>> Some, Func<Maybe<R>> None) =>
-            @this.HasValue
-                ? Some(@this.Value)
-                : None();
-
         /// <summary>
         /// Performs a Bind operation - for a Maybe of type T and a Func that takes type T and returns a Maybe of type R, this invokes the func if the Maybe{T} has a value, and returns an empty Maybe{R} otherwise where the function is asynchronous
         /// </summary>
@@ -325,12 +318,6 @@ namespace Fun
             @this.HasValue
                 ? await binder(@this.Value)
                 : Maybe<R>.Empty();
-
-        [Obsolete("This is not a real Bind")]
-        public static async Task<Maybe<R>> BindAsync<T, R>(this Maybe<T> @this, Func<T, Task<Maybe<R>>> Some, Func<Task<Maybe<R>>> None) =>
-            @this.HasValue
-                ? await Some(@this.Value)
-                : await None();
 
         // Task (Promise) monad support 
         /// <summary>
