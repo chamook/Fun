@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Fun.Exceptions;
 using AutoFixture.Xunit2;
 using Xunit;
@@ -1306,6 +1306,83 @@ namespace Fun.UnitTest
 
             Assert.True(actual.IsSuccessful);
             Assert.Equal(expected, actual.Success);
+        }
+
+        [Theory, AutoData]
+        public void TraverseGivesProperResultsWhenFunctionReturnsSuccess(
+            List<int> input)
+        {
+            var expected = input.Select(x => x + 1).ToList();
+
+            var actual = input.Traverse(x => Result<int, string>.Succeed(x + 1));
+
+            Assert.True(actual.IsSuccessful);
+            var result = actual.Success.ToList();
+            Assert.Equal(expected[0], result[0]);
+            Assert.Equal(expected[1], result[1]);
+            Assert.Equal(expected[2], result[2]);
+        }
+
+        [Theory, AutoData]
+        public void TraverseReturnsNoneIfFunctionReturnsFailure(
+            List<int> input,
+            string failure,
+            string failure2)
+        {
+            var counter = 0;
+            var actual =
+                input.Traverse(x =>
+                {
+                    counter++;
+
+                    if (counter > 1)
+                    {
+                        return Result<int,string>.Fail(failure2);
+                    }
+                    return Result<int,string>.Fail(failure);
+                });
+
+            Assert.False(actual.IsSuccessful);
+            Assert.Equal(failure, actual.Failure);
+        }
+
+        [Theory, AutoData]
+        public async Task TraverseAsyncGivesProperResultsWhenFunctionReturnsSuccess(
+            List<int> input)
+        {
+            var expected = input.Select(x => x + 1).ToList();
+
+            var actual =
+                await input.TraverseAsync(x => Result<int, string>.Succeed(x + 1).LiftAsync());
+
+            Assert.True(actual.IsSuccessful);
+            var result = actual.Success.ToList();
+            Assert.Equal(expected[0], result[0]);
+            Assert.Equal(expected[1], result[1]);
+            Assert.Equal(expected[2], result[2]);
+        }
+
+        [Theory, AutoData]
+        public async Task TraverseAsyncReturnsNoneIfFunctionReturnsFailure(
+            List<int> input,
+            string failure,
+            string failure2)
+        {
+            var counter = 0;
+            var actual =
+                await input.TraverseAsync(x =>
+                {
+                    counter++;
+
+                    if (counter > 1)
+                    {
+                        return Result<int,string>.Fail(failure2).LiftAsync();
+                    }
+                    return Result<int,string>.Fail(failure).LiftAsync();
+                });
+
+            Assert.False(actual.IsSuccessful);
+            Assert.Equal(failure, actual.Failure);
         }
     }
 }

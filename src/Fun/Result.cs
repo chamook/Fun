@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fun.Exceptions;
 using static Fun.Fun;
@@ -1303,6 +1304,46 @@ namespace Fun
             var f = await func;
             var i = await input;
             return f.Lift(i);
+        }
+
+        //Traversable
+
+        public static Result<IEnumerable<TResult>, TFailure> Traverse<TInput, TResult, TFailure>(
+            this IEnumerable<TInput> input,
+            Func<TInput, Result<TResult, TFailure>> func)
+        {
+            var output = new List<TResult>();
+
+            foreach(var i in input)
+            {
+                var x = func(i);
+
+                if(!x.IsSuccessful)
+                    return Result<IEnumerable<TResult>, TFailure>.Fail(x.Failure);
+
+                output.Add(x.Success);
+            }
+
+            return output;
+        }
+
+        public static async Task<Result<IEnumerable<TResult>, TFailure>> TraverseAsync<TInput, TResult, TFailure>(
+            this IEnumerable<TInput> input,
+            Func<TInput, Task<Result<TResult, TFailure>>> func)
+        {
+            var output = new List<TResult>();
+
+            foreach(var i in input)
+            {
+                var x = await func(i);
+
+                if(!x.IsSuccessful)
+                    return Result<IEnumerable<TResult>, TFailure>.Fail(x.Failure);
+
+                output.Add(x.Success);
+            }
+
+            return output;
         }
     }
 }
