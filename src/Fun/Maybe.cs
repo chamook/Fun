@@ -15,7 +15,7 @@ namespace Fun
     /// Represents a value that may or may not be available
     /// </summary>
     /// <typeparam name="T">The type of the value that may be available</typeparam>
-    public struct Maybe<T> : IEquatable<Maybe<T>>, IEquatable<T>
+    public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEquatable<T>
     {
         private readonly T _value;
 
