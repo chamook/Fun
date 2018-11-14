@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static Fun.Unit;
 
@@ -247,8 +247,7 @@ namespace Fun
         }
 
         // Special functions
-        public static T Identity<T>(T x) =>
-            x;
+        public static T Identity<T>(T x) => x;
 
         // The return type of this function is "used". This allows exceptions to be thrown in ternary operators, LINQ expressions etc.
         public static TR Raise<TR>(Exception ex)
@@ -256,163 +255,6 @@ namespace Fun
             throw ex;
         }
 
-        public static System.Collections.Generic.List<T> EmptyList<T>() =>
-            new System.Collections.Generic.List<T>();
-
-        // Returns a Func<T> that wraps func.  The first call to the resulting Func<T> will cache the result.
-        // Subsequent calls return the cached item.
-        public static Func<T> Memoize<T>(this Func<T> func)
-        {
-            var value = new Lazy<T>(func, true);
-            return () => value.Value;
-        }
-
-        // Adapted from https://github.com/louthy/language-ext/blob/master/LanguageExt.Core/Prelude_Memoize.cs
-        // Returns a Func<T,R> that wraps func.  Each time the resulting
-        // Func<T,R> is called with a new value, its result is memoized (cached).
-        // Subsequent calls use the memoized value.  
-        //     Thread-safe and memory-leak safe.  
-        public static Func<T, R> Memoize<T, R>(this Func<T, R> func)
-        {
-            var cache = new WeakDict<T, R>();
-            var syncMap = new ConcurrentDictionary<T, object>();
-
-            return inp => cache.TryGetValue(inp)
-                .MatchUnsafe(
-                    Some: x => x,
-                    None: () =>
-                    {
-                        R res;
-                        var sync = syncMap.GetOrAdd(inp, new object());
-                        lock (sync)
-                        {
-                            res = cache.GetOrAdd(inp, func);
-                        }
-                        syncMap.TryRemove(inp, out sync);
-                        return res;
-                    });
-        }
-
-        private struct OptionUnsafe<T>
-        {
-            private readonly T value;
-
-            private OptionUnsafe(T value, bool isSome)
-            {
-                this.IsSome = isSome;
-                this.value = value;
-            }
-
-            private OptionUnsafe(T value)
-            {
-                this.IsSome = true;
-                this.value = value;
-            }
-
-            public static OptionUnsafe<T> Some(T value) =>
-                new OptionUnsafe<T>(value, true);
-
-            public static readonly OptionUnsafe<T> None = new OptionUnsafe<T>();
-
-            public bool IsSome { get; }
-
-            private T Value =>
-                IsSome
-                    ? value
-                    : Raise<T>(new Exception("Option isn't set."));
-
-            // ReSharper disable once ParameterHidesMember
-            public R MatchUnsafe<R>(Func<T, R> Some, Func<R> None) =>
-                IsSome
-                    ? Some(Value)
-                    : None();
-
-            public static OptionUnsafe<T1> SomeUnsafe<T1>(T1 value) =>
-                OptionUnsafe<T1>.Some(value);
-        }
-
-        // Used internally by the memo function.  It wraps a concurrent dictionary that has 
-        // its value objects wrapped in a WeakReference<OnFinalise<...>>
-        // The OnFinalise type is a private class within WeakDict and does nothing but hold
-        // the value and an Action to call when its finalised.  So when the WeakReference is
-        // collected by the GC, it forces the finaliser to be called on the OnFinalise object,
-        // which in turn executes the action which renmoves it from the ConcurrentDictionary.  
-        // That means that both the key and value are collected when the GC fires rather than 
-        // just the value.  That should mitigate a memory leak of keys.
-        private class WeakDict<T, R>
-        {
-            private class OnFinalise<V>
-            {
-                public readonly V Value;
-                private readonly Action onFinalise;
-
-                public OnFinalise(Action onFinalise, V value)
-                {
-                    this.Value = value;
-                    this.onFinalise = onFinalise;
-                }
-
-                ~OnFinalise()
-                {
-                    onFinalise();
-                }
-            }
-
-            private readonly ConcurrentDictionary<T, WeakReference<OnFinalise<R>>> dict = new ConcurrentDictionary<T, WeakReference<OnFinalise<R>>>();
-
-            private WeakReference<OnFinalise<R>> NewRef(T key, Func<T, R> addFunc) =>
-                new WeakReference<OnFinalise<R>>(
-                    new OnFinalise<R>(() =>
-                    {
-                        WeakReference<OnFinalise<R>> ignore = null;
-                        dict.TryRemove(key, out ignore);
-                    },
-                        addFunc(key)));
-
-            public OptionUnsafe<R> TryGetValue(T key)
-            {
-                WeakReference<OnFinalise<R>> res = null;
-                OnFinalise<R> target = null;
-                return dict.TryGetValue(key, out res)
-                    ? res.TryGetTarget(out target)
-                        ? OptionUnsafe<R>.SomeUnsafe(target.Value)
-                        : OptionUnsafe<R>.None
-                    : OptionUnsafe<R>.None;
-            }
-
-            public R GetOrAdd(T key, Func<T, R> addFunc)
-            {
-                var res = dict.GetOrAdd(key, _ => NewRef(key, addFunc));
-
-                OnFinalise<R> target = null;
-                if (res.TryGetTarget(out target))
-                {
-                    return target.Value;
-                }
-                else
-                {
-                    var upd = NewRef(key, addFunc);
-                    res = dict.AddOrUpdate(key, upd, (_, __) => upd);
-                    if (res.TryGetTarget(out target))
-                    {
-                        return target.Value;
-                    }
-                    else
-                    {
-                        // This is a best guess of why the target can't be got.
-                        // It might not be the best approach, perhaps a retry, or a 
-                        // better/more-descriptive exception.
-                        throw new OutOfMemoryException();
-                    }
-                }
-            }
-
-            public bool TryRemove(T key)
-            {
-                WeakReference<OnFinalise<R>> ignore = null;
-                return dict.TryRemove(key, out ignore);
-            }
-        }
-
+        public static System.Collections.Generic.List<T> EmptyList<T>() => new List<T>();
     }
 }
